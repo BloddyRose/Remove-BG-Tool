@@ -1,7 +1,7 @@
 ﻿
 namespace RemoveBgTool
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -147,7 +147,7 @@ namespace RemoveBgTool
             this.btnSettings.UseVisualStyleBackColor = true;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -166,7 +166,7 @@ namespace RemoveBgTool
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(623, 346);
             this.MinimumSize = new System.Drawing.Size(623, 346);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Remove-BG-Tool";
             this.Load += new System.EventHandler(this.Form1_Load);

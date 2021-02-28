@@ -1,26 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Diagnostics;
 
 namespace RemoveBgTool
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private static string selectedfile = string.Empty;
         private static string selectedfolder = string.Empty;
         private static string api = string.Empty; // TODO Remove at release DONE
         private static string res = string.Empty;
         private static string message = string.Empty;
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
@@ -40,7 +35,7 @@ namespace RemoveBgTool
                     txtSelectedFile.Text = file;
 
                     localPhoto.Image = Image.FromFile(selectedfile);
-                    
+
                 }
                 else
                 {
@@ -73,17 +68,18 @@ namespace RemoveBgTool
             string dest = Path.Combine(selectedfolder, res);
 
             if (string.IsNullOrEmpty(api))
+            {
                 MessageBox.Show("The api key must not be empty please set it in the settings form", "Remove-BG-Tool");
-
+            }
             else
             {
-                using (var client = new HttpClient())
-                using (var formData = new MultipartFormDataContent())
+                using (HttpClient client = new HttpClient())
+                using (MultipartFormDataContent formData = new MultipartFormDataContent())
                 {
                     formData.Headers.Add("X-Api-Key", api);
                     formData.Add(new ByteArrayContent(File.ReadAllBytes(selectedfile)), "image_file", "file.jpg");
                     formData.Add(new StringContent("auto"), "size");
-                    var response = client.PostAsync("https://api.remove.bg/v1.0/removebg", formData).Result;
+                    HttpResponseMessage response = client.PostAsync("https://api.remove.bg/v1.0/removebg", formData).Result;
 
                     if (response.IsSuccessStatusCode)
                     {
@@ -105,7 +101,7 @@ namespace RemoveBgTool
         {
             if (string.IsNullOrEmpty(txtSelectedFile.Text))
             {
-                MessageBox.Show("Please select a file ","Remove-BG-Tool");
+                MessageBox.Show("Please select a file ", "Remove-BG-Tool");
                 btnFile.Focus();
             }
             else if (string.IsNullOrEmpty(txtSelectedFolder.Text))
@@ -121,7 +117,7 @@ namespace RemoveBgTool
 
         private void txtSelectedFile_TextChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void streamPhoto_Click(object sender, EventArgs e)
